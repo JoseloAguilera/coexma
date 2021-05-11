@@ -1,0 +1,91 @@
+/ * ESTILOS GLOBALES
+-------------------------------------------------- * /
+/ * Relleno debajo del pie de página y el texto del cuerpo más claro * /
+
+cuerpo {
+  acolchado superior: 3rem;
+  fondo acolchado: 3rem;
+  color: # 5a5a5a;
+}
+
+
+/ * PERSONALIZAR EL CARRUSEL
+-------------------------------------------------- * /
+
+/ * Clase base de carrusel * /
+.carousel {
+  margen inferior: 4rem;
+}
+/ * Desde que posicionamos la imagen, necesitamos ayudar con el título * /
+.carousel-caption {
+  abajo: 3rem;
+  índice z: 10;
+}
+
+/ * Declarar alturas debido al posicionamiento del elemento img * /
+.carousel-item {
+  altura: 32rem;
+  color de fondo: # 777;
+}
+.carousel-item> img {
+  posición: absoluta;
+  arriba: 0;
+  izquierda: 0;
+  ancho mínimo: 100%;
+  altura: 32rem;
+}
+
+
+/ * CONTENIDO DE MARKETING
+-------------------------------------------------- * /
+
+/ * Centrar el texto dentro de las tres columnas debajo del carrusel * /
+.marketing .col-lg-4 {
+  margen inferior: 1.5rem;
+  alineación de texto: centro;
+}
+.marketing h2 {
+  peso de fuente: 400;
+}
+.marketing .col-lg-4 p {
+  margen derecho: .75rem;
+  margen izquierdo: .75rem;
+}
+
+
+/ * Featurettes
+------------------------- * /
+
+.featurette-divider {
+  margen: 5rem 0; / * Espaciar el Bootstrap <hr> más * /
+}
+
+/ * Reducir los encabezados de marketing * /
+.featurette-header {
+  peso de fuente: 300;
+  altura de línea: 1;
+  espaciado entre letras: -.05rem;
+}
+
+
+/ * CSS RESPONSABLE
+-------------------------------------------------- * /
+
+@media (ancho mínimo: 40em) {
+  / * Aumente el tamaño del contenido del carrusel * /
+  .carousel-caption p {
+    margen inferior: 1,25rem;
+    tamaño de fuente: 1.25rem;
+    altura de línea: 1,4;
+  }
+
+  .featurette-header {
+    tamaño de fuente: 50px;
+  }
+}
+
+@media (ancho mínimo: 62em) {
+  .featurette-header {
+    margen superior: 7rem;
+  }
+}
