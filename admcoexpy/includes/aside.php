@@ -47,6 +47,8 @@
 
 			$subpedidoswp1 = "";
 			$subpedidoswp2 = "";
+			$subconsultapagopar1 = "";
+			$subconsultapagopar2 = "";
 
 			$configuraciones = "";
 			$subusuario1 = "";
@@ -106,6 +108,10 @@
 				$ecommerce = "active";
 				$subpedidoswp1 = "active";
 				$subpedidoswp2 = "text-aqua";
+			} else if (strpos($_SERVER['REQUEST_URI'], 'consultapagopar.php') !== false){
+				$ecommerce = "active";
+				$subconsultapagopar1 = "active";
+				$subconsultapagopar2 = "text-aqua";
 			} else if (strpos($_SERVER['REQUEST_URI'], 'banner.php') !== false){
 				$ecommerce = "active";
 				$subbanner1 = "active";
@@ -170,6 +176,7 @@
 					<li class="<?php echo $subpedidos1;?>"><a href="pedido.php"><i class="fa fa-circle-o <?php echo $subpedidos2;?>"></i> Carrito de Compras</a></li>
 					<li class="<?php echo $subpedidosexp1;?>"><a href="pedido_express.php"><i class="fa fa-circle-o <?php echo $subpedidosexp2;?>"></i> Pedidos (Formulario)</a></li>
 					<li class="<?php echo $subpedidoswp1;?>"><a href="pedidos_whatsapp.php"><i class="fa fa-circle-o <?php echo $subpedidoswp2;?>"></i> WhatsApp</a></li>
+					<li class="<?php echo $subconsultapagopar1;?>"><a href="consultapagopar.php"><i class="fa fa-circle-o <?php echo $subconsultapagopar2;?>"></i> Cons. Pagopar</a></li>
 				</ul>
 			</li>
 			<li class="<?php echo $reportes;?> treeview">

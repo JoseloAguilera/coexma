@@ -1463,3 +1463,161 @@ function saveDetallePedidos ($id_pedido, $id_producto, $id_combinacion, $combina
 	$connection = disconn($connection);
 	return $result;
 }
+
+
+function enviarPagopar($idPedido, $total_envio, $total_compra, $id_comprador, $ruc, $email, $nombre, $apellido, $telefono, $direccion, $cedula,
+							$razonsocial){
+		
+		$token_privado='cd164afdd444e7243016f0a0c2aa4492';
+		$token_publico='5b4624d6c17d7358044472d3632f548b';
+		$total=$total_envio+$total_compra;
+		//sha1($datos['comercio_token_privado'] . $idPedido . strval(floatval($j['monto_total'])));
+
+		$pedido_token= sha1($token_privado. $idPedido.strval(floatval($total)));
+		$comprador['ruc']= $ruc;
+		$comprador['email']= $email;
+		$comprador['nombre']= "$nombre "." $apellido";
+		$comprador['telefono']= $telefono;
+		$comprador['direccion']= $direccion;
+		$comprador['documento']= $cedula;
+		$comprador['coordenadas']= "";
+		$comprador['razon_social']= $razonsocial;
+		$comprador['tipo_documento']= "CI";
+		$comprador['direccion_referencia']= null;
+		$comprador['ciudad']= "";
+
+
+		$compras_items['ciudad']= "1";
+		$compras_items['nombre']= "Pedido Virtual de Coexma";
+		$compras_items['cantidad']= 1;
+		$compras_items['categoria']= "909";
+		$compras_items['public_key']= "$token_publico";
+		$compras_items['url_imagen']= "http://www.coexma.com.py/img/logo2.png";
+		$compras_items['descripcion']= "Ticket virtual Coexma - PY";
+		$compras_items['id_producto']= 895;
+		$compras_items['precio_total']= $total;
+		$compras_items['vendedor_telefono']= "";
+		$compras_items['vendedor_direccion']= "";
+		$compras_items['vendedor_direccion_referencia']= "";
+		$compras_items['vendedor_direccion_coordenadas']= "";
+	
+		$fecha_actual=date("Y-m-d H:i:s");
+		$fecha_futura = strtotime('+1 day', strtotime($fecha_actual));
+		$fecha_futura = date('Y-m-d H:i:s', $fecha_futura);
+
+		$pedido['token']=$pedido_token;
+		$pedido['comprador']=$comprador;
+		$pedido['public_key']="$token_publico";
+		$pedido['monto_total']=$total;
+		$pedido['tipo_pedido']="VENTA-COMERCIO";
+		$pedido['compras_items'][0]=$compras_items;
+		$pedido['fecha_maxima_pago']=$fecha_futura;
+		$pedido['id_pedido_comercio']=$idPedido;
+		$pedido['descripcion_resumen']="";
+
+		//var_dump($pedido);
+		//API URL
+		$url = "https://api.pagopar.com/api/comercios/1.1/iniciar-transaccion";
+		$postdata = json_encode($pedido);
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+		$result = json_decode(curl_exec($ch), true);
+		//var_dump($result);
+	    //var_dump($result['resultado'][0]['data']);
+		if(curl_errno($ch))	{
+    		echo 'Curl error: ' . curl_error($ch);  		}
+    	else{ 
+        	if($result["respuesta"]==true){
+            	$hash_pedido=$result['resultado'][0]['data'];
+                $connection = conn();
+                try{
+            	$sql = "INSERT INTO transactions (id, monto, fecha_maxima_pago, hash_pedido, compradorId)
+            	    VALUES ($idPedido, $total, '$fecha_futura' , '$hash_pedido', $id_comprador )";
+            	$query = $connection->prepare($sql);
+            	$query->execute();
+                }catch (\Exception $e) {
+				$result = $e;
+			    }
+            	$connection = disconn($connection);
+            	//echo $result;
+            	
+            	?>
+            	<script type="text/javascript"> 
+                    window.location="https://www.pagopar.com/pagos/<?php echo $hash_pedido;?>"; 
+                </script> 
+            	<?php
+                
+	            //header('Location:https://www.pagopar.com/pagos/'.$hash_pedido);
+            	//exit();
+        	}else{
+				echo 'Consulte al administrador de sistemas.<br>Error: '.$result['resultado'];
+        	}
+     	}
+		curl_close($ch);
+	}
+
+
+	function actualizarPagopar($pagado, $forma_pago, $fecha_pago, $numero_pedido, $cancelado, $forma_pago_identificador, $hash_pedido){
+		if($pagado==true){
+			$pago=1;
+		}else{
+			$pago=0;
+		}
+		if($cancelado==true){
+			$cancel=1;
+		}else{
+			$cancel=0;
+		}
+		$connection = conn();
+		try{
+			$sql = "UPDATE transactions SET pagado = '$pago', forma_pago = '$forma_pago', numero_pedido = '$numero_pedido', cancelado = '$cancel', 
+					forma_pago_identificador = '$forma_pago_identificador', updated = 'current_timestamp' WHERE hash_pedido = '$hash_pedido'";
+		        $query = $connection->prepare($sql);
+            	$query->execute();
+
+			} catch (\Exception $e) {
+				$result = $e;
+				echo "Error, contacte al administrador. Error -> ".$result;
+			}
+			$connection = disconn($connection);
+	}
+
+
+	function obtenerPedido($hash){
+		$connection = conn();
+
+		$sql= "SELECT id FROM transactions WHERE hash_pedido = '"."$hash'";
+		$query = $connection->prepare($sql);
+		$query->execute();
+		if ($query->rowCount() > 0) {
+			$result= $query->fetch();
+		} else {
+			$result = null;
+		}
+		return $result;
+
+		$connection = disconn($connection);
+
+	}
+
+
+	function actualizarPago($pedido_id){
+		$connection = conn();
+		try{
+			$sql = "UPDATE tb_pedido SET status = '2' WHERE id = '$pedido_id'";
+				$query = $connection->prepare($sql);
+				$query->execute();
+
+			} catch (\Exception $e) {
+				$result = $e;
+				echo "Error, contacte al administrador. Error -> ".$result;
+			}
+			$connection = disconn($connection);
+
+	}

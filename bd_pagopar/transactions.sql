@@ -12,7 +12,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Volcando estructura para tabla ecommerce.transactions
+-- Volcando estructura para tabla coexmaco_coexmanew_db.transactions
 CREATE TABLE IF NOT EXISTS `transactions` (
   `id` int(11) NOT NULL,
   `pagado` int(2) NOT NULL DEFAULT '0',
