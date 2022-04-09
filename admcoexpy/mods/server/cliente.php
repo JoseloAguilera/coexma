@@ -3,7 +3,8 @@
 
 	function getAllClientes () {
 		$connection = conn();
-        $sql = "SELECT * FROM tb_cliente 
+        $sql = "SELECT * FROM tb_cliente
+		WHERE deleted_at IS NULL
         ORDER BY nombre ASC";
         
 		$query = $connection->prepare($sql);
@@ -21,7 +22,9 @@
 	
 	function countAllClientes () {
 		$connection = conn();
-        $sql = "SELECT COUNT(id) AS TOTAL FROM tb_cliente";
+        $sql = "SELECT COUNT(id) AS TOTAL
+		FROM tb_cliente
+		WHERE deleted_at IS NULL";
         
 		$query = $connection->prepare($sql);
 		$query->execute();
@@ -39,7 +42,7 @@
     function getCliente ($id) {
 		$connection = conn();
         $sql = "SELECT * FROM tb_cliente 
-                WHERE tb_cliente.id = $id";
+                WHERE tb_cliente.id = $id AND deleted_at IS NULL";
         
 		$query = $connection->prepare($sql);
 		$query->execute();
@@ -75,16 +78,16 @@
 		return $result;
 	}
 
-	function saveClienteADM ($id, $mayorista) {
+	function saveClienteADM ($id, $nombre, $apellido, $razon, $ruc, $ci, $telefono) {
 		$connection = conn();
 		
 		try {
-			$sql = "SELECT * from tb_cliente WHERE id = $id";
+			$sql = "SELECT * from tb_cliente WHERE id = $id AND deleted_at IS NULL";
 			$query = $connection->prepare($sql);
 			$query->execute();
 
 			if ($query->rowCount() > 0) {
-				$sql = "UPDATE tb_cliente SET mayorista = '$mayorista'
+				$sql = "UPDATE tb_cliente SET nombre = '$nombre', apellido = '$apellido', razon_social = '$razon', ruc = '$ruc', documento = '$ci', telefono = '$telefono'
 	 					WHERE id = $id";
 				$query = $connection->prepare($sql);
 				$query->execute();
@@ -104,4 +107,34 @@
 		return $result;
 	}
 
+	function deleteClienteADM ($id){
+		$connection = conn();
+		
+		try {
+			$sql = "SELECT * from tb_cliente WHERE id = $id AND deleted_at IS NULL";
+			$query = $connection->prepare($sql);
+			$query->execute();
+
+			// $update_date_time=now();
+
+			if ($query->rowCount() > 0) {
+				$sql = "UPDATE tb_cliente SET deleted_at = CURRENT_DATE()
+	 					WHERE id = $id";
+				$query = $connection->prepare($sql);
+				$query->execute();
+
+				if ($query->rowCount() > 0) {
+                    $result = $id;
+				} else {
+					$result = $id; //Sem alteração
+				}
+			} else {
+				$result = null;
+			}			
+		} catch (\Exception $e) {
+			$result = $e;
+		}
+		$connection = disconn($connection);
+		return $result;
+	}
 ?>

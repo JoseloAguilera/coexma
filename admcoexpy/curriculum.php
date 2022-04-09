@@ -61,6 +61,7 @@
 							<table class="table table-striped table-bordered display nowra" id="tabladatos">
 							<thead>
 								<tr>
+								    <th>FECHA</th>
 									<th>Area</th>
                                     <th>Departamento</th>
 									<th>Nombre Completo</th>
@@ -75,6 +76,7 @@
 										foreach ($curriculum as $row) {											
 								?>
 								<tr onclick="window.location.href = 'curriculum_detalle.php?curriculum=<?php echo $row['id'];?>';">
+								    	<td><?php echo $row['fecha_add'];?></td>
 									<td><?php echo $row['area'];?></td>
                                     <td><?php echo $row['id_departamento']." - ".$row['id_ciudad'];?></td>
 									<td><?php echo $row['nombre']." ".$row['apellido'];?></td>

@@ -61,11 +61,12 @@
 							<table class="table table-striped table-bordered display nowra" id="tabladatos">
 							<thead>
 								<tr>
-									<th>Tipo</th>
+									<!-- <th>Tipo</th> -->
+										<th>ID</th>
 									<th>Nombre Completo</th>
 									<th>Razón Social</th>
-									<th>Tipo Documento</th>
-									<th>Nro Documento</th>
+									<th>RUC</th>
+									<th>Documento</th>
 									<th>Telefono</th>
 									<th>Email</th>
 								</tr>
@@ -76,16 +77,18 @@
 										foreach ($clientes as $row) {											
 								?>
 								<tr data-toggle="modal" data-target="#AltModal" data-codigo="<?php echo $row['id'];?>" data-nombre="<?php echo $row['nombre'];?>" data-apellido="<?php echo $row['apellido'];?>" data-razon="<?php echo $row['razon_social'];?>" data-tipo="<?php echo $row['ruc'];?>" data-numero="<?php echo $row['documento'];?>" data-mayorista="<?php echo $row['mayorista'];?>"; data-telefono="<?php echo $row['telefono'];?>" data-email="<?php echo $row['email'];?>">
-									<td>
+									<!-- <td>
 										<?php 
-											$mayorista = "";
-											if ($row['mayorista'] == 0) {
-												$mayorista = "Minorista";
-											} else {
-												$mayorista = "Mayorista";
-											}
-											echo $mayorista;?>
-									</td>
+											// $mayorista = "";
+											// if ($row['mayorista'] == 0) {
+											// 	$mayorista = "Minorista";
+											// } else {
+											// 	$mayorista = "Mayorista";
+											// }
+											// echo $mayorista;
+										?>
+									</td> -->
+										<td><?php echo $row['id'];?></td>
 									<td><?php echo $row['nombre']." ".$row['apellido'];?></td>
 									<td><?php echo $row['razon_social'];?></td>
 									<td><?php echo $row['ruc'];?></td>
@@ -129,54 +132,54 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="nombre">Nombre</label>
-												<input type="text" class="form-control" id="nombre" value="" readonly>
+												<input type="text" class="form-control" id="nombre" value="" name="nombre">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="nombre">Apellido</label>
-												<input type="text" class="form-control" id="apellido" value="" readonly>
+												<input type="text" class="form-control" id="apellido" value="" name="apellido">
 											</div>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-12">
+										<div class="col-md-9">
 											<div class="form-group">
 												<label for="nombre">Razón Social</label>
-												<input type="text" class="form-control" id="razon" value="" readonly>
+												<input type="text" class="form-control" id="razon" value="" name="razon">
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="nombre">RUC</label>
+												<input type="text" class="form-control" id="tipo" value="" name="ruc">
 											</div>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-3">
+										<div class="col-md-6">
 											<div class="form-group">
-												<label for="nombre">Tipo Doc.</label>
-												<input type="text" class="form-control" id="tipo" value="" readonly>
+												<label for="nombre">C.I.</label>
+												<input type="text" class="form-control" id="numero" value="" name="ci">
 											</div>
 										</div>
-										<div class="col-md-5">
+										<div class="col-md-6">
 											<div class="form-group">
-												<label for="nombre">Número Doc.</label>
-												<input type="text" class="form-control" id="numero" value="" readonly>
+												<label for="telefono">Telefono</label>
+												<input type="text" class="form-control" id="telefono" value="" name="telefono">
 											</div>
 										</div>
-										<div class="col-md-4">
+										<!-- <div class="col-md-4">
 											<label for="activo">Tipo</label>
 											<div class="row">
 												<div class="col-md-12">
 													<input type="checkbox" id="toggle" name="mayorista" data-toggle="toggle" data-on="Mayorista" data-off="Minorista" data-onstyle="success" data-offstyle="warning" data-width="100%" data-height="35">
 												</div>
 											</div>
-										</div>
+										</div> -->
 									</div>
-									<div class="row">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="telefono">Telefono</label>
-												<input type="text" class="form-control" id="telefono" value="" readonly>
-											</div>
-										</div>
-										<div class="col-md-8">
+									<div class="row">										
+										<div class="col-md-12">
 											<div class="form-group">
 												<label for="email">Email</label>
 												<input type="text" class="form-control" id="email" value="" readonly>
@@ -185,6 +188,8 @@
 									</div> <!-- row --> 
 								</div> <!-- modal-body -->
 								<div class="modal-footer">
+									<button type="button" class="btn btn-danger pull-left" name="excluir" id="btn-confirmar">Excluir</button>
+									<button type="submit" class="btn" name="excluir" id="btn-excluir" style="display: none;">Submit Excluir</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 									<button type="submit" class="btn btn-primary" name="guardar">Guardar</button>
 								</div>
@@ -193,6 +198,21 @@
 					</div><!-- /.modal-dialog -->
 				</div><!-- /.modal -->
 				<!-- ./AltModal -->	
+				<!-- Confirmación Modal (para excluisiones) -->
+				<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">¿Deseas eliminar este registro?</h4>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" id="modal-btn-si">Sí</button>
+								<button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</section>
 		</div> <!-- /.content-wrapper -->
 

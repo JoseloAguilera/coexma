@@ -251,7 +251,9 @@
                         </div>
                         <div class="box-footer">
                             <div class="row">
-                                <div class="col-md-12 text-center"><h4>Total del Pedido: <b><?php echo "G$ ".number_format($pedido['total'], 0, ',', '.');?></b></h4></div>
+                                <div class="col-md-4 text-center"><h4>Total del Pedido: <b><?php echo "G$ ".number_format($pedido['total'], 0, ',', '.');?></b></h4></div>
+                                <div class="col-md-4 text-center"><h4>Total del Envio: <b><?php echo "G$ ".number_format($pedido['total_envio'], 0, ',', '.');?></b></h4></div>
+                                <div class="col-md-4 text-center"><h4>Total del Pedido: <b><?php echo "G$ ".number_format(($pedido['total']+$pedido['total_envio']), 0, ',', '.');?></b></h4></div>
                             </div>
                         </div> <!-- /.box-footer-->
                     </div> <!-- box-body -->

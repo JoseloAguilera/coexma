@@ -3,11 +3,13 @@
     include_once "mods/server/producto.php";
     include_once "mods/server/pedido.php";
     include_once "mods/server/contacto.php";
+    include_once "mods/server/encuesta.php";
 
     $ctd_clientes = countAllClientes ();
     $ctd_productos = countAllProductosActivos();
     $ctd_pedidos = countAllPedidos();
     $ctd_whatsapp = countWhatsApp();
+    $ctd_encuestas = countAllEncuestas();
     
 
     $ctd_formulario = countReservasForm();

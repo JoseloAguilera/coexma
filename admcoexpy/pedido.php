@@ -164,7 +164,7 @@
 
                                     <td><?php echo $row['MET_ENVIO'];?></td>
 
-                                    <td><?php echo number_format($row['total'], 0, ',', '.')." Gs";?></td>
+                                    <td><?php echo number_format(($row['total']+$row['total_envio']), 0, ',', '.')." Gs";?></td>
 
 
 

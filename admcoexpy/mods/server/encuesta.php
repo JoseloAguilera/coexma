@@ -55,4 +55,21 @@
 		return $result;
     }
 
-    ?>
+	function countAllEncuestas() {
+		$connection = conn();
+        $sql = "SELECT COUNT(DISTINCT(id)) AS TOTAL
+		FROM tb_preguntas_respuestas";
+        
+		$query = $connection->prepare($sql);
+		$query->execute();
+
+		if ($query->rowCount() > 0) {
+			$result= $query->fetch();
+		} else {
+			$result = null;
+		}
+
+		$connection = disconn($connection);
+		return $result;
+	}
+?>

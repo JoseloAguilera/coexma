@@ -199,9 +199,18 @@
 						<div class="small-box bg-yellow">
 							<div class="inner">
 								<h3> 
-									Encuesta
+								<?php  
+									if ($ctd_encuestas['TOTAL'] != null) { 
+										echo $ctd_encuestas['TOTAL']; 
+										
+									} else { 
+										echo "0"; 
+									}	 
+								?> 
+									<!-- Encuesta -->
 								</h3> 
-								<p>Que tan Satisfechos estan los clientes? </p>
+								<p>¿Cuántas encuestas fueron contestadas?</p>
+								<!-- <p>Que tan Satisfechos estan los clientes? </p> -->
 							</div>
 							<div class="icon">
 								<i class="fa fa-bar-chart"></i>
