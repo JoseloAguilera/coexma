@@ -4,6 +4,7 @@
 <?php 
 	require "funciones/funciones.php";
     include("includes/head.php"); 
+    include("includes/phpmailerenvio.php");  
     if(isset($_GET['id'])){
         $id=$_GET['id'];
     }else{$id='1';}
@@ -24,21 +25,27 @@
                        $email= "Email: ".$_POST['email'];
                        $assunto= "Assunto: ".$_POST['asunto'];
                        $mensajeform = "Mensaje: ".$_POST['mensaje'];
-                       $msg = $nombre."\n".$telefono."\n".  $email."\n".$mensajeform."\n".$prod." \n".$link."\n";
+                       $msg = $nombre."<br> \n".$telefono."<br>  \n".  $email."<br>  \n".$mensajeform."<br>  \n".$prod."<br>  \n".$link." <br> \n";
    
                        // use wordwrap() if lines are longer than 70 characters
                        // $msg = wordwrap($msg,300);
                        // send email
                        //    mail("capacitcursoscde@gmail.com","Nuevo Pedido Express",$msg);
+
+                       $emaildata =getMails(1);     
+
+                       $mail->setFrom($emaildata['email_from']);
+                       $mail->addAddress($emaildata['email_to'], 'Dto. de Marketing');     //Add a recipient
+                       //$mail->addAddress('capacitcursoscde@gmail.com');               //Name is optional
+                       $mail->addReplyTo($_POST['email'], $_POST['nombre']);
+
    
-                       $mail =getMails(1);                 
-                       $to = $mail['email_to'];
-                       $subject = "Sitio Web - Mensaje de Pàgina de Contacto";
-                       //$txt = $msg;
-                       $headers = "From:".$mail['email_from']. "\r\n" .
-                       "CC:".$mail['email_cc'];
+                       $mail->isHTML(true);                                  //Set email format to HTML
+                       $mail->Subject = 'MSJ FORMULARIO DE CONTACTO - '. $assunto;
+                       $mail->Body    = $msg;
+                       $mail->AltBody = $msg;
    
-                       mail($to,$subject,$msg,$headers);
+                       $mail->send();
 
 
                        
