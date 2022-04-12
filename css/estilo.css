@@ -85,7 +85,7 @@ nav.navbar.navbar-expand-md.navbar-dark.fixed-top {
     background: white;
 }
 section.section-dark {
-  background: rgb(241 239 239);
+  background: rgb(255 255 255);
   padding: 90px 0;
   border-top: 1px solid #e2e2e2;
 }
@@ -258,6 +258,7 @@ input.btn.btn-success {
 .product-grid .product-image{overflow:hidden;position:relative}
 .product-grid .product-image a{display:block}
 .product-grid .product-image img{width:100%;height:auto}
+.product-grid .product-image img:hover{width:100%;height:auto;-webkit-transform: rotate(360deg);}
 .product-image .pic-1{opacity:1;transition:all .5s}
 .product-grid:hover .product-image .pic-1{opacity:0}
 .product-image .pic-2{width:100%;height:100%;opacity:0;position:absolute;top:0;left:0;transition:all .5s}
