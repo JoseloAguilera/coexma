@@ -8,7 +8,8 @@ error_reporting(E_ALL);*/
 <html lang="es">
 <?php 
 	require "funciones/funciones.php";
-    include("includes/head.php");            
+    include("includes/head.php");      
+    include("includes/phpmailerenvio.php");           
     if(isset($_GET['id'])){$id=$_GET['id'];}else{$id='1';}
 
       $producto =getProducto($id);
@@ -27,21 +28,37 @@ error_reporting(E_ALL);*/
                     $telefono= "Telefono: ".$_POST['telefono'];
                     $ciudad= "Ciudad: ".$_POST['ciudad'];
                     $mensajeform = "Mensaje: ".$_POST['mensaje'];
-                    $msg = $nombre."\n".  $telefono."\n".$mensajeform."\n".$ciudad."\n".$prod." \n".$link."\n";
+                    $msg = $nombre." <br> \n".  $telefono."<br> \n".$mensajeform."<br> \n".$ciudad."<br>\n".$prod."<br> \n".$link."<br> \n";
 
                     // use wordwrap() if lines are longer than 70 characters
                     // $msg = wordwrap($msg,300);
                     // send email
                     //    mail("capacitcursoscde@gmail.com","Nuevo Pedido Express",$msg);
+                     //Recipients
+                    $emaildata =getMails(1);     
 
-                    $mail =getMails(1);                 
-                    $to = $mail['email_to'];
-                    $subject = $mail['assunto'];
-                    //$txt = $msg;
-                    $headers = "From:".$mail['email_from']. "\r\n" .
-                    "CC:".$mail['email_cc'];
+                    $mail->setFrom($emaildata['email_from']);
+                    $mail->addAddress($emaildata['email_to'], 'Dto. de Marketing');     //Add a recipient
+                    //$mail->addAddress('capacitcursoscde@gmail.com');               //Name is optional
+                    $mail->addReplyTo($_POST['email'], $_POST['nombre']);
+                    //$mail->addCC('cc@example.com');
+                    // $mail->addBCC('bcc@example.com');
 
-                    mail($to,$subject,$msg,$headers);
+                    //Attachments
+                    //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+                    //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+                    //Content
+                
+
+                    $mail->isHTML(true);                                  //Set email format to HTML
+                    $mail->Subject = 'MENSAJE DESDE FORMULARIO DE VENTA DIRECTA DE UN PRODUCTO';
+                    $mail->Body    = $msg;
+                    $mail->AltBody = $msg;
+
+                    $mail->send();
+
+
                   
 					//echo "<script type='text/javascript'>document.location.href='pedido-completado.php?ped=".$guardarpedido."';</script>";
 				}	else if ($guardarpedido == null) {

@@ -2,14 +2,18 @@
 <!doctype html>
 <html lang="es">
 <?php 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 	require "funciones/funciones.php";
-    include("includes/head.php"); 
+    include("includes/head.php");
+    
   if (isset($_GET['tienda'])) {
     $_SESSION['tienda'] = $_GET['tienda'];
-  }else{ $_SESSION['tienda'] = 1;}
+  }else{ $_SESSION['tienda'] = 1;
+  }
+  
+ 
 ?>
   <body>
 	<!-- Header section -->
@@ -347,6 +351,19 @@ Desde la Dirección de <b>COEXMA S.R.L</b> nos comprometemos a realizar una corr
 implantación de la política de calidad a todos los niveles de la empresa, proporcionado
 los recursos necesarios para su efectividad y teniendo en cuenta que la mejora es 	responsabilidad de todos los integrantes de la empresa empezando desde arriba.	
 <br>
+                    <br>
+                    <small>Ciudad del Este, 06 de enero de 2020</small><br>
+                    <small>Rev 01</small>
+                    <br>
+                    <a class="btn btn-success" href="img/upload/Política-de-Calidad-Rev-01.pdf" target="blank">DESCARGAR POLÍTICA DE CALIDAD</a>
+                    <br>
+                    <br>
+                    </p>
+                    <hr>
+    </div>   
+ <div class="text-center">
+                      <p  class=" text-center">
+
                         Ya sos Cliente? 
                         <a href="formulario.php">Evalue nuestros servicios!</a>
                         </p>

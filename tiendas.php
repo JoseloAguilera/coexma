@@ -8,6 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="img/favi.png">
 
+
     <title>Coexma S.R.L - Muebles de Oficina & Equipamientos de Gastronomia & Refrigeración - Paraguay</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
@@ -23,6 +24,25 @@
 	<link rel="stylesheet" href="css/font-awesome.css"/>
 	<link rel="stylesheet" href="css/owl.carousel.css"/>
     <link rel="stylesheet" href="css/owl.theme.default.css"/>
+
+    <!-- Meta Pixel Code -->
+    <script>
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '655922825385254');
+          fbq('track', 'PageView');
+          </script>
+          <noscript><img height="1" width="1" style="display:none"
+          src="https://www.facebook.com/tr?id=655922825385254&ev=PageView&noscript=1"
+          /></noscript>
+          <!-- End Meta Pixel Code -->
+
     
     
 
