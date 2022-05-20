@@ -16,7 +16,7 @@
 
 <head>
 
-    <title><?php echo $_SESSION['empresa'];?> | Cad. Marcas</title>
+    <title><?php echo $_SESSION['empresa'];?> | Productos del Bloque</title>
 
 	<?php include 'includes/head.php'; ?>
 
@@ -42,6 +42,8 @@
 
 
 
+		<?php include_once "mods/objs/bloques_producto.php";?>
+
 		<!-- Content Wrapper. Contains page content -->
 
 		<div class="content-wrapper">
@@ -52,9 +54,9 @@
 
 				<h1>
 
-					Marcas
+					Productos en Bloque
 
-					<small>Registro de las marcas usadas para separar los productos.</small>
+					<small>Seleccion de productos en el bloque</small>
 
 				</h1>
 
@@ -66,19 +68,15 @@
 
 			<section class="content">
 
-				<?php include_once "mods/objs/marca.php";?>
-
-				<!-- Caja de Texto de color gris (Default) -->
-
 				<div class="box">
 
 					<div class="box-header with-border">
 
-						<!-- Botón para crear más cursos -->
+					<!-- Botón para crear más cursos -->
 
 						<div class="col-md-3 pull-left">
 
-							<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddModal" style="margin-bottom: 5px;">+ Nueva</button>
+							<button id="btnAdd" type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddModal" style="margin-bottom: 5px;">+ Nuevo</button>
 
 						</div>
 
@@ -138,11 +136,20 @@
 
 								<tr>
 
-									<th></th>
+									<!-- <th>Tipo</th> -->
 
-									<th>Marca</th>
+									<th>Id Bloque</th>
 
-									<th>Activo</th>
+									<th>Ubicación</th>
+
+									<th>Titulo</th>
+
+									<th>Id Producto</th>
+
+									<th>Ref. Producto</th>
+
+									<th>Producto</th>
+
 
 								</tr>
 
@@ -150,42 +157,52 @@
 
 							<tbody>
 
-								<?php 
+                                <?php 
 
-									if ($marcas != null) { 
+									if ($bloques_productos != null) { 
 
-										foreach ($marcas as $row) {
+										foreach ($bloques_productos as $row) {											
 
 								?>
 
-								<tr data-toggle="modal" data-target="#AltModal" data-codigo="<?php echo $row['id'];?>" data-nombre="<?php echo $row['nombre'];?>" data-url="<?php echo $row['url'];?>" data-activo="<?php echo $row['activo'];?>">
+								<tr data-toggle="modal" data-target="#AltModal" data-codigo_bloque="<?php echo $row['id_bloque'];?>" data-id_producto="<?php echo $row['id'];?>" >
 
-								<td><img src="img/marcas/<?php echo $row['url'];?>" class="img-fluid img-thumbnail" alt="marca" style="max-width: 150px;"></td>
+									<!-- <td>
 
-									<td> <?php echo $row['nombre'];?>
+										<?php 
 
-									<td>
+											// $mayorista = "";
 
-									<?php
+											// if ($row['mayorista'] == 0) {
 
-										$circle_color = "";
+											// 	$mayorista = "Minorista";
 
-										if ($row['activo'] == 1) {
+											// } else {
 
-											echo '<span style="color: white">S</span><i class="fa fa-check text-success"></i>';
+											// 	$mayorista = "Mayorista";
 
-										} else {
+											// }
 
-											echo '<span style="color: white">N</span><i class="fa fa-close text-danger"></i>';
+											// echo $mayorista;
 
-										}
+										?>
 
-									?>
+									</td> -->
 
-									</td>
+									<td><?php echo $row['id_bloque'];?></td>
 
-									<!-- <td>0</td> -->
+									<td><?php echo $row['ubicacion'];?></td>
 
+									<td><?php echo $row['titulo'];?></td>
+
+									<td><?php echo $row['id'];?></td>
+
+									<td><?php echo $row['referencia'];?></td>
+
+									<td><?php echo $row['nombre'];?></td>
+
+
+									
 								</tr>
 
 								<?php }}?>
@@ -218,7 +235,8 @@
 
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-								<h4 class="modal-title">Nueva Marca</h4>
+								<h4 class="modal-title">Nuevo Producto en Bloque
+								</h4>
 
 							</div>
 
@@ -228,35 +246,71 @@
 
 									<div class="row">
 
-										<div class="col-md-5 text-center">
-
-											<img src="img/marcas/no-image.png" class="img-fluid img-thumbnail img-modal" alt="no-image" id="img">
-
-										</div>
-
-										<div class="col-md-7">
-
-											<div class="form-group">
-
-												<label for="nombre">Nombre</label>
-
-												<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de la Marca" maxlength="80" required>
-
-											</div>
-
-										</div>
-
 										<div class="col-md-12">
 
 											<div class="form-group">
 
-												<label for="fileToUpload"></label>
+												<label for="bloques">Bloque</label>
 
-												<input type="file"  name="fileToUpload" id="fileToUpload">
+												<select class="selectpicker" id="codigo_bloque" name="codigo_bloque" data-width="100%">
+
+													<?php
+
+														if ($bloques != null) {
+
+															foreach ($bloques as $row) {	
+
+													?>
+
+																<option value="<?php echo $row['id'];?>"><?php echo $row['titulo']." en ".$row['ubicacion'];?></option> 
+
+													        <?php 
+
+															} //END FOREACH
+
+														} //END IF
+
+													?>
+
+												</select>
 
 											</div>
 
 										</div>
+										<div class="col-md-12">
+
+											<div class="form-group">
+
+												<label for="bloques">Producto</label>
+
+												<select class="selectpicker" id="codigo_producto" name="codigo_producto" data-width="100%" data-live-search="true">
+													
+													
+													<?php
+
+														if ($productos != null) {
+
+															foreach ($productos as $row) {	
+
+													?>
+
+																<option value="<?php echo $row['id'];?>"><?php echo $row['referencia']." - ".$row['nombre'];?></option> 
+
+													        <?php 
+
+															} //END FOREACH
+
+														} //END IF
+
+													?>
+
+												</select>
+
+											</div>
+
+										</div>
+
+										
 
 									</div> <!-- row -->
 
@@ -266,7 +320,7 @@
 
 									<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 
-									<button type="submit" class="btn btn-primary" name="nuevo">Guardar</button>
+									<button type="submit" class="btn btn-primary" name="guardar">Guardar</button>
 
 								</div>
 
@@ -294,7 +348,7 @@
 
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-								<h4 class="modal-title">Alteración Marca</h4>
+								<h4 class="modal-title">Producto en Bloque</h4>
 
 							</div>
 
@@ -304,51 +358,69 @@
 
 									<div class="row">
 
-										<input type="hidden" class="form-control" id="codigo" name="codigo" required>
+										<!--input type="hidden" class="form-control" id="codigo_bloque" name="codigo_bloque" required>
 
-										<input type="hidden" class="form-control" id="imgurl" name="imgurl" required>
-
-										<div class="col-md-5 text-center">
-
-											<img src="img/marcas/no-image.png" class="img-fluid img-thumbnail img-modal" alt="no-image" id="img-alt">
-
-										</div>
-
-										<div class="col-md-7">
-
-											<div class="form-group">
-
-												<label for="nombre">Nombre</label>
-
-												<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de la Categoría" maxlength="80" required>
-
-											</div>
-
-										</div>
-
-										<div class="col-md-3">
-
-											<label for="activo">Activo</label>
-
-											<div class="row">
-
-												<div class="col-md-12">
-
-													<input type="checkbox" name="activo" id="activo" data-toggle="toggle" data-on="Sí" data-off="No" data-onstyle="success" data-offstyle="warning" data-width="100%" data-height="35" checked>
-
-												</div>
-
-											</div>
-
-										</div>
+										<input type="hidden" class="form-control" id="codigo_producto" name="codigo_producto" required-->
 
 										<div class="col-md-12">
 
 											<div class="form-group">
 
-												<label for="fileToUpload"></label>
+												<label for="bloques">Bloque</label>
 
-												<input type="file"  name="fileToUpload" id="fileToUpload">
+												<select class="selectpicker" id="codigo_bloque" name="codigo_bloque" data-width="100%">
+
+													<?php
+
+														if ($bloques != null) {
+
+															foreach ($bloques as $row) {	
+
+													?>
+
+																<option value="<?php echo $row['id'];?>"><?php echo $row['titulo']." en ".$row['ubicacion'];?></option> 
+
+													        <?php 
+
+															} //END FOREACH
+
+														} //END IF
+
+													?>
+
+												</select>
+
+											</div>
+
+										</div>
+										<div class="col-md-12">
+
+											<div class="form-group">
+
+												<label for="bloques">Producto</label>
+
+												<select class="selectpicker" id="codigo_producto" name="codigo_producto" data-width="100%" data-live-search="true">
+													
+													
+													<?php
+
+														if ($productos != null) {
+
+															foreach ($productos as $row) {	
+
+													?>
+
+																<option value="<?php echo $row['id'];?>"><?php echo $row['referencia']." - ".$row['nombre'];?></option> 
+
+													        <?php 
+
+															} //END FOREACH
+
+														} //END IF
+
+													?>
+
+												</select>
 
 											</div>
 
@@ -416,7 +488,7 @@
 
 			</section>
 
-		</div> <!-- /.content-wrapper -->
+		</div> <!-- /.content-wrapper -->		
 
 
 
@@ -436,13 +508,14 @@
 
 	<script type="text/javascript">
 
-		<?php include_once "mods/js/marca.js"; ?>
+		<?php include_once "mods/js/bloques_producto.js"; ?>
 
 	</script>
 
 	<?php include "includes/scripts.php"; ?>
-
+	
 	<!-- ./SCRIPTS (js) -->
+
 
 </body>
 
