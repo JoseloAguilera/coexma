@@ -1,12 +1,5 @@
- <?php
- if ($_SESSION['tienda'] == 1){
-	include("includes/pluguin_facebook_muebles.php");
-  }else{
-    include("includes/pluguin_facebook_refrigeracion.php");
-  }
-  ?>
 	<!-- Footer section -->
-<footer class="footer-section">
+	<footer class="footer-section">
   <div class="container">
         <div class="row">
           <div class="col-md-3 text-center">
@@ -114,8 +107,7 @@
              
               </p>
               <p>
-                <br>
-                <a href="https://www.coexma.com.py/certificacion-internacional.php"><img src="img/upload/coexma-srl-certificacion-iso-9001-2015.png" alt="" style="max-width:150px;"></a>
+                <img src="img/upload/iso-901-2015.jpg" alt="">
                      </p>
              
               <!--div class="cards">
@@ -145,7 +137,7 @@
 			<p class="copyright white text-center" style="font-family:'Quicksand', sans-serif">
       <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
       Copyright &copy;<script>document.write(new Date().getFullYear());</script> Todos los derechos reservados | Desarrollado por <br>
-       <a href="https://www.facebook.com/viawebparaguay">VIAWEB PARAGUAY</a>
+       <a href="http://viaweb.com.py">VIAWEB PARAGUAY</a>
       <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
       </p>
       </div>

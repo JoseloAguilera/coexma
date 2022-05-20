@@ -19,7 +19,7 @@
                 foreach ($unidades as $unidad) {?>  
                     
                   
-                <div class="col-md-3" data-aos="fade-up"
+                <div class="col-md-4" data-aos="fade-up"
      data-aos-duration="3000">
                     <div class="unidades">
                         <figure>
@@ -29,8 +29,8 @@
                             <h4><?php echo $unidad["nombre"]; ?></h4>
                             <hr>
                             <p><span>Dirección:</span> <?php echo $unidad["direccion"]; ?></p>
-                            <p><span>Telefonos:</span>  <?php echo $unidad["telefonos"]; ?></p> 
-                            <p><span>Horarios:</span>   <br><?php echo $unidad["horarios"]; ?></p>       
+                            <p><span>Telefonos:</span> <?php echo $unidad["telefonos"]; ?></p> 
+                            <p><span>Horarios:</span>  <?php echo $unidad["horarios"]; ?></p>       
                         </div>
                     </div>
                 </div>  

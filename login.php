@@ -21,7 +21,9 @@
                 if (!is_array($login)) {
                     if (substr($login,0,1) == "E") {
                         $mensaje = '<p class="text-center alert alert-danger">Consulte al administrador de sistemas.<br>Error->"'.$login.'"</p>';
-                    } else {
+                    } else if (substr($login,0,1) == "D") {
+                        $mensaje = '<p class="text-center alert alert-danger">Consulte nuestra administración para reactivar tus datos de Login.</p>';
+                    }else {
                         $mensaje = '<p class="text-center alert alert-danger">¡Verifique sus datos! Su autentificación ha fracasado.</p>';
                     }
                 } else {	

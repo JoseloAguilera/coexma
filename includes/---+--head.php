@@ -4,9 +4,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Coexma S.R.L - Sillas, Muebles de Oficina & Equipamientos de Gastronomia & Refrigeración - Paraguay</title>
-
-    
+    <title>coexma</title>
         <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
         <link rel="shortcut icon" href="img/favi.png">
 
@@ -14,12 +12,10 @@
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
-        
         <link href="css/carousel.css" rel="stylesheet">
         <link rel="stylesheet" href="css/font-awesome.css"/>
          <link rel="stylesheet" href="css/owl.carousel.css"/>
         <link rel="stylesheet" href="css/owl.theme.default.css"/>
-        <link rel="stylesheet" href="css/imagehover/css/imagehover.css">
         
         <link href="css/estilo.css" rel="stylesheet">
 
@@ -30,11 +26,11 @@
         <!--script src="sweetalert2.all.min.js"></script-->
         <!-- Optional: include a polyfill for ES6 Promises for IE11 -->
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <meta name="facebook-domain-verification" content="a54gjaw9z52vqiqi5x2ciuc8a9we1b" />
+
         <!-- Facebook Pixel Code -->
-        <!-- Meta Pixel Code -->
           <script>
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -44,15 +40,13 @@
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '655922825385254');
+          fbq('init', '961665801084764');
           fbq('track', 'PageView');
           </script>
           <noscript><img height="1" width="1" style="display:none"
-          src="https://www.facebook.com/tr?id=655922825385254&ev=PageView&noscript=1"
+          src="https://www.facebook.com/tr?id=961665801084764&ev=PageView&noscript=1"
           /></noscript>
-          <!-- End Meta Pixel Code -->
-       
-
+          <!-- End Facebook Pixel Code -->
 
           <style type="text/css">
                   @media all and (min-width: 992px) {

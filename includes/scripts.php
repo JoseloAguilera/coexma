@@ -18,9 +18,25 @@
 
 </script>
 
+<script>
+         <!--
+            function WriteCookie() {
+               var now = new Date();
+               var minutes = 30;
+               now.setTime(now.getTime() + (minutes * 60 * 1000));
+               cookievalue ="watsclickon";
+
+               document.cookie="name=" + cookievalue;
+               document.cookie = "expires=" + now.toUTCString() + ";"
+               document.write ("Setting Cookies : " + "name=" + cookievalue );
+            }
+         //-->
+      </script>
+
 
 <script  type="text/javascript" >
 function guardar(codvendedor, vendedor_whatsapp) {
+  
 var _nombre = document.getElementById("whats_nombre").value;
 var _telefono = document.getElementById("whats_nro").value;
 var _vendedor = codvendedor;
@@ -29,6 +45,7 @@ currentLocation = currentLocation.replace(/\s/g, '%20')
 if (_nombre==""){
       		alert("Tiene que introducir tu Nombre.")
       		document.getElementById("whats_nombre").focus()
+         
       		//return 0;
 } else if (_telefono==""){
       		alert("Tiene que introducir tu Nro. de Telefono.")
@@ -42,23 +59,30 @@ var datos = {
   "full_url":  currentLocation
 };
 
+$("#vendedores").css("display", "none");
+$("#loading-i").css("display", "block");
+
 $.ajax({
   data:  datos,
   url:   'send_whatsapp.php',
   type:  'post',
   success:  function (response) {
 	if(response==1)
-	  //alert('Solicitud exitosa.');	
-	//  window.open(window.location.href = 'https://web.whatsapp.com/send?phone="098322121"&text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n+sobre+un+producto...','_blank');
-	  window.open('https://api.whatsapp.com/send?phone="'+vendedor_whatsapp+'&text=Hola, me llamo '+_nombre +', me gustaria conocer más sobre este producto: "'+currentLocation+'"', '_blank');
-      //window.location.href = ''; 
-	//  https://api.whatsapp.com/send?phone=595983112965&text=Hola%2C%20quiero%20mas%20informaci%C3%B3n%20sobre%20un%20producto     
-	  //window.location.href = "https://www.linkedin.com/in/brandon-barber-79043593/";
+
+
+	 
+	  window.open('https://api.whatsapp.com/send?phone="'+vendedor_whatsapp+'&text=Hola, me llamo '+_nombre +', me gustaria conocer más sobre este producto: "'+currentLocation+'"', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=300,height=200,left = 390,top = 50');
+  
+    
 	else
 	  alert('Por favor intente de nuevo.')
   }
 });
 
+
+setTimeout("$('#whatsmodal').modal('hide');",5000);
+
+$
 }
 
 //var i = 1; 
@@ -84,7 +108,7 @@ $.ajax({
  
 <script type="text/javascript" >
 
-
+$("#loading-i").css("display", "none");
 	$(document).ready(function(e){
 	  $("#unidades").change(function(){
 	 		var parametros= "id="+$("#unidades").val();

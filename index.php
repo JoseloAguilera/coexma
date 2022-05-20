@@ -6,6 +6,8 @@
 	require "funciones/funciones.php";
   include("includes/head.php"); 
 
+  
+
   if (isset($_GET['tienda'])) {
     $_SESSION['tienda'] = $_GET['tienda'];
   }
@@ -31,6 +33,10 @@
   <main role="main">
     <?php  include("includes/mensaje.php"); 
     $banners = getBanners(1);
+    $bloque1= getBloque(1);
+    $bloque2= getBloque(2);
+    $bloque3= getBloque(3);
+    $bloque4= getBloque(4);
     ?>
 	<!-- Hero section -->
 	<section style="padding:0px !important;"  data-aos="fade-up"
@@ -70,104 +76,120 @@
 				</div>
                 </div>
             </div>
+            
 		</section>
 
-
-    <?php $destacados = getProductosDestacados($_SESSION['tienda'],16);?>
-    <section  data-aos="fade-up"
+    <?php 
+    //$bloque1= getBloque(1);
+    //var_dump($bloque1);
+    if(($bloque1['posicion']=='1') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque1.php" );
+      $impresion = ob_get_clean(); 
+      echo $impresion;
+    }elseif (($bloque2['posicion']=='1') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque2.php" );
+      $impresion = ob_get_clean();
+      echo $impresion; 
+    }elseif (($bloque3['posicion']=='1') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque3.php" );
+      $impresion = ob_get_clean();
+      echo $impresion; 
+    }elseif (($bloque4['posicion']=='1') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque4.php" );
+      $impresion = ob_get_clean();
+      echo $impresion;
+    } 
+     ?>
+   
+    <?php// $destacados = getProductosDestacados($_SESSION['tienda'],16);?>
+    <!--section  data-aos="fade-up"
      data-aos-duration="3000">
         <div class="container">
             <div class="row">
                 <div class="container text-center">
                   <hr>
-                <h3 class="h3 titulo-seccion">Productos Más Vendidos</h3>
+                 <?php  //$textos = getTitulos();  ?>
+                <h3 class="h3 titulo-seccion">Promociones Semanales<?php //echo $textos['t1']  ?></h3>
                 <hr>
                 <p></p>
-                    <div class="row">
-                      <?php foreach ($destacados as $row) { ?>
-                          <div class="col-md-3 col-sm-6">
+                    <div class="owl-carousel owl-theme" id="owl-primero">
+                      <?php// foreach ($destacados as $row) { ?>
+                        <div class ="item">  
+                        
+                            
                             <div class="product-grid">
                                 <div class="product-image">
-                                <a href="producto.php?id=<?php echo $row['id']; ?>">
-                                        <?php if (isset(getProdImage($row['id'])['url'])) { ?>
+                                <a href="producto.php?id=<?php //echo $row['id']; ?>">
 
-                                           <img class="pic-1" src="img/productos/<?php echo getProdImage($row['id'])['url']; ?>">
-                                           <img class="pic-2" src="img/productos/<?php echo getProdImage($row['id'])['url']; ?>">
+
+                                        <?php// if (isset(getProdImage($row['id'])['url'])) { ?>
+                                          <figure class="imghvr-fold-right">  
+
+                                           <img src="img/productos/<?php //echo getProdImage($row['id'])['url']; ?>">
+                                           <figcaption>
+                                             <p>
+                                                <?php// if (isset(getProdImagesecundaria($row['id'])['url'])) { ?>
+                                                   <img src="img/productos/<?php// echo getProdImagesecundaria($row['id'])['url']; ?>">
+                                                 <?php // } else { ?> 
+                                                    <img src="img/productos/<?php //echo getProdImage($row['id'])['url']; ?>">
+                                              <?php //} ?>
+                                           </figcaption>
+                                          
+                                           </p>
+                                          </figure>
                                         
-                                       <?php  } else { ?> 
+                                       <?php // } else { ?> 
                                        <img class="" src="img/productos/no-image.png">
-                                       <?php } ?>
+                                       <?php //} ?>
                                            
                                         </a>
-                                    <a class="add-to-cart" href="producto.php?id=<?php echo $row['id']; ?>">Ver mas..</a>
+                                    <a class="add-to-cart" href="producto.php?id=<?php //echo $row['id']; ?>">Ver mas..</a>
                                 </div>
                                 <div class="product-content">
-                                    <h3 class="title"><a href="producto.php?id=<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></a></h3>
-                                    <span class="price"><?php if(($row['precio']>0)){ echo number_format($row['precio'], 0, ',', '.')." gs"; } else{ echo "<span class='price-consult'>Sobre Consulta</span>";} ?></span>
+                                    <h3 class="title"><a href="producto.php?id=<?php //echo $row['id']; ?>"><?php //echo $row['nombre']; ?></a></h3>
+                                    <span class="price"><?php// if(($row['precio']>0)){ echo number_format($row['precio'], 0, ',', '.')." gs"; } else{ echo "<span class='price-consult'>Sobre Consulta</span>";} ?></span>
                               </div>
                             </div>
+                          
                         </div>
-                      <?php } ?>
+                      <?php //} ?>
 
                   
                   </div>
             </div>            
         </div>
-    </section>
+    </section-->
 
-    <?php $categorya = getProdbyCategoriaHome(3,4);?>
-    <section class="section-dark"  data-aos="fade-up"
-     data-aos-duration="3000">
-        <div class="container">
-            <div class="row">
-                <div class="container text-center">
-                        <div class="row">
-                          <!--div class="col-md-3">
-                            <figure><img src="" alt=""></figure>
-                          </div-->
-                          <div class="col-md-12  col-sm-6">
-                            <hr>
-                            <h3 class="h3 titulo-seccion">Otras Sillas Recomendadas</h3>
-                            <hr>
-                            <p>La armonia perfecta entre la versatilidad y ligereza con un impresionante toque de elegancia</p>
-                              <div class="row">
-                              <?php foreach ($categorya as $row) { ?>
-                              <div class="col-md-3 col-sm-6">
-                                <div class="product-grid">
-                                    <div class="product-image">
-                                    <a href="producto.php?id=<?php echo $row['id']; ?>">
-                                        <?php if (isset(getProdImage($row['id'])['url'])) { ?>
-
-                                           <img class="pic-1" src="img/productos/<?php echo getProdImage($row['id'])['url']; ?>">
-                                           <img class="pic-2" src="img/productos/<?php echo getProdImage($row['id'])['url']; ?>">
-                                        
-                                       <?php  } else { ?> 
-                                       <img class="" src="img/productos/no-image.png">
-                                       <?php } ?>
-                                           
-                                        </a>
-                                        <a class="add-to-cart" href="producto.php?id=<?php echo $row['id']; ?>">Ver mas..</a>
-                                    </div>
-                                    <div class="product-content">
-                                        <h3 class="title"><a href="producto.php?id=<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></a></h3>
-                                        <span class="price"><?php if(($row['precio']>0)){ echo number_format($row['precio'], 0, ',', '.')." gs"; } else{ echo "<span class='price-consult'>Sobre Consulta</span>";} ?></span>
-                                        
-                                  </div>
-                                </div>
-                            </div>
-                              <?php } ?>  
-                          </div>
-                        </div>
-                
-                </div>
-            </div>            
-        </div>
-    </section>
-
-
-
-
-
+    <?php 
+    //$bloque1= getBloque(1);
+    //var_dump($bloque1);
+    if(($bloque1['posicion']=='2') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque1.php" );
+      $impresion = ob_get_clean(); 
+      echo $impresion;
+    }elseif (($bloque2['posicion']=='2') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque2.php" );
+      $impresion = ob_get_clean();
+      echo $impresion; 
+    }elseif (($bloque3['posicion']=='2') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque3.php" );
+      $impresion = ob_get_clean();
+      echo $impresion; 
+    }elseif (($bloque4['posicion']=='2') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque4.php" );
+      $impresion = ob_get_clean();
+      echo $impresion;
+    } 
+     ?>
+    
 
   <section id="proyectos-destacados" class="n-padding"  data-aos="fade-up"
      data-aos-duration="3000"> 
@@ -206,98 +228,61 @@
 
   </section>
 
+  <?php 
+    //$bloque1= getBloque(1);
+    //var_dump($bloque1);
+    if(($bloque1['posicion']=='3') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque1.php" );
+      $impresion = ob_get_clean(); 
+      echo $impresion;
+    }elseif (($bloque2['posicion']=='3') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque2.php" );
+      $impresion = ob_get_clean();
+      echo $impresion; 
+    }elseif (($bloque3['posicion']=='3') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque3.php" );
+      $impresion = ob_get_clean();
+      echo $impresion; 
+    }elseif (($bloque4['posicion']=='3') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque4.php" );
+      $impresion = ob_get_clean();
+      echo $impresion;
+    } 
+     ?>
 
+  <?php 
+    //$bloque1= getBloque(1);
+    //var_dump($bloque1);
+    if(($bloque1['posicion']=='4') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque1.php" );
+      $impresion = ob_get_clean(); 
+      echo $impresion;
+    }elseif (($bloque2['posicion']=='4') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque2.php" );
+      $impresion = ob_get_clean();
+      echo $impresion; 
+    }elseif (($bloque3['posicion']=='4') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque3.php" );
+      $impresion = ob_get_clean();
+      echo $impresion; 
+    }elseif (($bloque4['posicion']=='4') AND ($_SESSION['tienda']=='1')){
+      ob_start();
+      include( "bloque4.php" );
+      $impresion = ob_get_clean();
+      echo $impresion;
+    } 
+     ?>
 
-  <?php $categoryb = getProdbyCategoriaHome(4,4);?>
-    <section class="section-white"  data-aos="fade-up"
-     data-aos-duration="3000">
-        <div class="container">
-            <div class="row">
-                <div class="container text-center">
-                        <div class="row">
-                          <!--div class="col-md-3">
-                            <figure><img src="" alt=""></figure>
-                          </div-->
-                          <div class="col-md-12 col-sm-6">
-                            <hr>
-                            <h3 class="h3 titulo-seccion">Equipos Para oficina</h3>
-                            <hr>
-                            <!--p>Persianas verticales, horizontales, romanas y mucho mas</p-->
-                              <div class="row">
-                              <?php foreach ($categoryb as $row) { ?>
-                                <div class="col-md-3 col-sm-6">
-                                <div class="product-grid">
-                                    <div class="product-image">
-                                    <a href="producto.php?id=<?php echo $row['id']; ?>">
-                                        <?php if (isset(getProdImage($row['id'])['url'])) { ?>
+   
 
-                                           <img class="pic-1" src="img/productos/<?php echo getProdImage($row['id'])['url']; ?>">
-                                           <img class="pic-2" src="img/productos/<?php echo getProdImage($row['id'])['url']; ?>">
-                                        
-                                       <?php  } else { ?> 
-                                       <img class="" src="img/productos/no-image.png">
-                                       <?php } ?>
-                                           
-                                        </a>
-                                        <a class="add-to-cart" href="producto.php?id=<?php echo $row['id']; ?>">Ver mas..</a>
-                                    </div>
-                                    <div class="product-content">
-                                        <h3 class="title"><a href="producto.php?id=<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></a></h3>
-                                        <span class="price"><?php if(($row['precio']>0)){ echo number_format($row['precio'], 0, ',', '.')." gs"; } else{ echo "<span class='price-consult'>Sobre Consulta</span>";} ?></span>
-                                  </div>
-                                </div>
-                            </div>
-                              <?php } ?>  
-                          </div>
-                        </div>
-                
-                </div>
-            </div>            
-        </div>
-    </section>
-
-    <?php $categoryc = getProdbyCategoriaHome(6,4);?>
-    <!--section class="section-dark">
-        <div class="container">
-            <div class="row">
-                <div class="container text-center">
-                        <div class="row">
-                         
-                          <div class="col-md-12">
-                            <h3 class="h3">Muebles para Bar</h3>
-                            <p>Descripcion de la categoria</p>
-                              <div class="row">
-                              <?php foreach ($categoryc as $row) { ?>
-                                <div class="col-md-3 col-sm-6">
-                                <div class="product-grid">
-                                    <div class="product-image">
-                                    <a href="producto.php?id=<?php echo $row['id']; ?>">
-                                        <?php if (isset(getProdImage($row['id'])['url'])) { ?>
-
-                                           <img class="pic-1" src="img/productos/<?php echo getProdImage($row['id'])['url']; ?>">
-                                           <img class="pic-2" src="img/productos/<?php echo getProdImage($row['id'])['url']; ?>">
-                                        
-                                       <?php  } else { ?> 
-                                       <img class="" src="img/productos/no-image.png">
-                                       <?php } ?>
-                                           
-                                        </a>
-                                        <a class="add-to-cart" href="producto.php?id=<?php echo $row['id']; ?>">Ver mas..</a>
-                                    </div>
-                                    <div class="product-content">
-                                        <h3 class="title"><a href="producto.php?id=<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></a></h3>
-                                        <span class="price"><?php if(($row['precio']>0)){ echo number_format($row['precio'], 0, ',', '.')." gs"; } else{ echo "<span class='price-consult'>Sobre Consulta</span>";} ?></span>
-                                  </div>
-                                </div>
-                            </div>
-                              <?php } ?>  
-                          </div>
-                        </div>
-                
-                </div>
-            </div>            
-        </div>
-    </section-->
+    
 
      <!-- footer section -->
      <!-- Button trigger modal -->
@@ -344,10 +329,92 @@ $('#owl-marca').owlCarousel({
             items:6
         }
     }
+  })
 
-
-
+  $('#owl-bloque1').owlCarousel({
+    loop:true,
+    margin:0,
+    dots:false,
+	lazyLoad:true,
+	autoplay:true,
+    nav:true,
+	navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+    responsive:{
+        0:{
+            items:2
+        },
+        600:{
+            items:4
+        },
+        1000:{
+            items:4
+        }
+      }
 })
+  $('#owl-bloque2').owlCarousel({
+    loop:true,
+    margin:0,
+    dots:false,
+	lazyLoad:true,
+	autoplay:true,
+    nav:true,
+	navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+    responsive:{
+        0:{
+            items:2
+        },
+        600:{
+            items:4
+        },
+        1000:{
+            items:4
+        }
+      }
+})
+
+$('#owl-bloque3').owlCarousel({
+    loop:true,
+    margin:0,
+    dots:false,
+	lazyLoad:true,
+	autoplay:true,
+    nav:true,
+	navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+    responsive:{
+        0:{
+            items:2
+        },
+        600:{
+            items:4
+        },
+        1000:{
+            items:4
+        }
+      }
+})
+
+$('#owl-bloque4').owlCarousel({
+    loop:true,
+    margin:0,
+    dots:false,
+	lazyLoad:true,
+	autoplay:true,
+    nav:true,
+	navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+    responsive:{
+        0:{
+            items:2
+        },
+        600:{
+            items:4
+        },
+        1000:{
+            items:4
+        }
+      }
+})
+
+
 </script>
   
   </body>

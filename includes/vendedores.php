@@ -16,7 +16,7 @@ if(isset($_POST['id'])):
 	//$w=limpiar($value['whatsapp']);
 		$html.="
 	
-		<div class='col-md-12' id='vendedor' onclick='guardar(".$value['id'].",".limpiar($value['whatsapp']).");'>
+		<div class='col-md-12 vnd' id='v-".$value['id']."' onclick='guardar(".$value['id'].",".limpiar($value['whatsapp']).");'>
 		<a href='#'<div class='row'>
 		<div class='col-md-2'>
 		<figure class='whats-list-img'>
